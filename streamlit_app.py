@@ -12,6 +12,18 @@ opsi = st.sidebar.selectbox("Pilih Model:", ["Klasifikasi", "Regresi"])
 
 data = pd.read_csv("data/02_realisasi_anggaran_klasifikasi.csv")
 
+st.subheader("Ringkasan Dashboard")
+summary_cols = st.columns(4)
+with summary_cols[0]:
+    st.metric("Total Satker", f"{data['kode_satker'].nunique():,}")
+with summary_cols[1]:
+    st.metric("Total Pagu", f"Rp {data['pagu_miliar'].sum():,.1f} M")
+with summary_cols[2]:
+    st.metric("Rata-rata Skor IKPA", f"{data['skor_ikpa'].mean():.1f}")
+with summary_cols[3]:
+    target_rate = data["realisasi_tercapai_95persen"].eq("Ya").mean()
+    st.metric("Satker Capai 95%", f"{target_rate:.1%}")
+
 PROVINCE_COORDINATES = {
     "Aceh": (4.6951, 96.7494),
     "Bali": (-8.4095, 115.1889),
